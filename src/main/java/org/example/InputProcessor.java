@@ -26,11 +26,11 @@ public class InputProcessor {
             String line = lines[i].trim();
 
             if (line.startsWith("C")) {
-                Optional<Record> record = Record.parseRecord(line);
+                Optional<Record> record = Record.parse(line);
                 record.ifPresent(dataManager::addRecord);
 
             } else if (line.startsWith("D")) {
-                Optional<Query> query = Query.parseQuery(line);
+                Optional<Query> query = Query.parse(line);
                 query.ifPresent(q -> System.out.println(dataManager.processQueryToString(q)));
             }
         }

@@ -24,7 +24,7 @@ public class Record {
         this.waitingTime = waitingTime;
     }
 
-    public static Optional<Record> parseRecord(String line) {
+    public static Optional<Record> parse(String line) {
         try {
             String[] parts = line.split(" ");
             if (parts.length != 6 || parts[0].charAt(0) != 'C') {

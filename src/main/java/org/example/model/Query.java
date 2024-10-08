@@ -25,7 +25,7 @@ public class Query {
         this.dateTo = dateTo;
     }
 
-    public static Optional<Query> parseQuery(String line) {
+    public static Optional<Query> parse(String line) {
         try {
             String[] parts = line.split(" ");
             if (parts.length != 5 || parts[0].charAt(0) != 'D') {
