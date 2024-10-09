@@ -40,7 +40,7 @@ public class DataManager {
         List<Record> matchingRecords = records.stream()
                 .filter(record -> matchesService(record, query))
                 .filter(record -> matchesQuestion(record, query))
-                .filter(record -> record.getResponseType() == query.getResponseType())
+                .filter(record -> record.responseType() == query.responseType())
                 .filter(record -> matchesDateRange(record, query))
                 .toList();
 
@@ -49,7 +49,7 @@ public class DataManager {
         }
 
         int averageWaitingTime = (int) matchingRecords.stream()
-                .mapToInt(Record::getWaitingTime)
+                .mapToInt(Record::waitingTime)
                 .average()
                 .orElse(0);
 
@@ -62,16 +62,16 @@ public class DataManager {
 
     private boolean matchesService(Record record, Query query) {
 
-        if (query.getService().getId() == null) {
+        if (query.service().id() == null) {
             return true;
         }
 
-        if (!Objects.equals(record.getService().getId(), query.getService().getId())) {
+        if (!Objects.equals(record.service().id(), query.service().id())) {
             return false;
         }
 
-        Integer recordVariationId = record.getService().getVariationId();
-        Integer queryVariationId = query.getService().getVariationId();
+        Integer recordVariationId = record.service().variationId();
+        Integer queryVariationId = query.service().variationId();
 
         return queryVariationId == null || queryVariationId.equals(recordVariationId);
     }
@@ -79,31 +79,31 @@ public class DataManager {
 
     private boolean matchesQuestion(Record record, Query query) {
 
-        if (query.getQuestion().getTypeId() == null) {
+        if (query.question().typeId() == null) {
             return true;
         }
 
-        if (!Objects.equals(record.getQuestion().getTypeId(), query.getQuestion().getTypeId())) {
+        if (!Objects.equals(record.question().typeId(), query.question().typeId())) {
             return false;
         }
 
-        Integer recordCategoryId = record.getQuestion().getCategoryId();
-        Integer queryCategoryId = query.getQuestion().getCategoryId();
+        Integer recordCategoryId = record.question().categoryId();
+        Integer queryCategoryId = query.question().categoryId();
 
         if(queryCategoryId != null && !queryCategoryId.equals(recordCategoryId)) {
             return false;
         }
 
-        Integer recordSubCategoryId = record.getQuestion().getSubCategoryId();
-        Integer querySubCategoryId = query.getQuestion().getSubCategoryId();
+        Integer recordSubCategoryId = record.question().subCategoryId();
+        Integer querySubCategoryId = query.question().subCategoryId();
 
         return querySubCategoryId == null || querySubCategoryId.equals(recordSubCategoryId);
     }
 
     private boolean matchesDateRange(Record record, Query query) {
-        LocalDate recordDate = record.getDate();
-        LocalDate dateFrom = query.getDateFrom();
-        LocalDate dateTo = query.getDateTo();
+        LocalDate recordDate = record.date();
+        LocalDate dateFrom = query.dateFrom();
+        LocalDate dateTo = query.dateTo();
 
         boolean afterOrOnStart = !recordDate.isBefore(dateFrom);
 
