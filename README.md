@@ -40,7 +40,7 @@ D 3 10 P 01.12.2012
 ```
 
 ## Setup
-1. **Prerequisites:** Java 11 or later.
+1. **Prerequisites:** Java 17 or later.
 2. **Compile and Run:**
    To compile: ```javac Main.java```
    To run: ```java Main```
